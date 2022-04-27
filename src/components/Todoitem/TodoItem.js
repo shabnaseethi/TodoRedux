@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../TodoList/TodoList.css";
 import { useDispatch } from "react-redux";
 import { addtodo } from "../Redux/todoslice.js";
 
@@ -31,7 +30,7 @@ function TodoList() {
             type="text"
             placeholder="Enter Tasks..."
             aria-label="default input example"
-            value={value || ''}
+            value={value || ""}
             onChange={(event) => setValue(event.target.value)}
           ></input>
           <button

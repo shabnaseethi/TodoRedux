@@ -1,26 +1,26 @@
-
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { deletetodo, updatetodo,toggletodo } from "../Redux/todoslice.js";
-
+import { deletetodo, updatetodo, toggletodo } from "../Redux/todoslice.js";
+import { db } from "../firebase/config.ts";
+import { collection, deleteDoc, doc,getDoc } from "firebase/firestore";
 
 function TodoList(props) {
-
-  const[value,setValue]=useState(props.title);
-  const completed=props.completed;
+  const [value, setValue] = useState(props.title);
+  const completed = props.completed;
   const dispatch = useDispatch();
 
-  const handleDelete = (id) => {
-    dispatch(deletetodo({ id: id }));
-  };
-  const handleUpdate=(id)=>{
-    
-    dispatch(updatetodo({id:id,title:value}));
-  }
-  const handleCheckbox=(id)=>{
-    dispatch(toggletodo({id:id,completed:!completed}))
+  const todoCollectionRef = collection(db, "todolist");
 
-  }
+  const handleDelete = (id) => {
+ dispatch(deletetodo({ id: id }));
+        
+  };
+  const handleUpdate = (id) => {
+    dispatch(updatetodo({ id: id, title: value }));
+  };
+  const handleCheckbox = (id) => {
+    dispatch(toggletodo({ id: id, completed: !completed }));
+  };
   return (
     <div className="list-items">
       <div className="input-group mb-3">
@@ -31,7 +31,7 @@ function TodoList(props) {
             value=""
             checked={completed}
             aria-label="Checkbox for following text input"
-            onChange={()=>handleCheckbox(props.id)}
+            onChange={() => handleCheckbox(props.id)}
           ></input>
         </div>
         <input
